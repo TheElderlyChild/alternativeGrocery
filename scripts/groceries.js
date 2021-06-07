@@ -8,6 +8,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: true,
 		organic: true,
+		category: 'vegetable',
 		price: 1.99
 	},
 	{
@@ -15,6 +16,7 @@ var products = [
 		lactoseIntolerant: false,
 		nutAllergy: true,
 		organic: false,
+		category: 'baked goods',
 		price: 2.35
 	},
 	{
@@ -22,6 +24,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: true,
 		organic: true,
+		category: 'fish',
 		price: 10.00
 	},
 	{
@@ -29,6 +32,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: true,
 		organic: false,
+		category: 'dairy',
 		price: 3.45
 	},
 	{
@@ -36,6 +40,7 @@ var products = [
 		lactoseIntolerant: false,
 		nutAllergy: true,
 		organic: true,
+		category: 'dairy',
 		price: 2.99
 	},
 	{
@@ -43,6 +48,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: false,
 		organic: true,
+		category: 'nut',
 		price: 7.23
 	},
 	{
@@ -50,6 +56,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: false,
 		organic: false,
+		category: 'snack',
 		price: 2.50
 	},
 	{
@@ -57,6 +64,7 @@ var products = [
 		lactoseIntolerant: false,
 		nutAllergy: true,
 		organic: true,
+		category: 'dairy',
 		price: 2.97
 	},
 	{
@@ -64,6 +72,7 @@ var products = [
 		lactoseIntolerant: true,
 		nutAllergy: true,
 		organic: true,
+		category: 'vegetable',
 		price: 1.97
 	},
 	{
@@ -71,6 +80,7 @@ var products = [
 		lactoseIntolerant: false,
 		nutAllergy: true,
 		organic: false,
+		category: 'dairy',
 		price: 4.97
 	}
 ];
@@ -80,19 +90,11 @@ var products = [
 // given restrictions provided, make a reduced list of products
 // prices should be included in this list, as well as a sort based on price
 
-function restrictListProducts(prods, restriction, organicPreference) {
+function restrictListProducts(prods, lactoseIntolerant, nutAllergy, organicPreference, category) {
 	let product_names = [];
 	for (let i=0; i<prods.length; i+=1) {
-		if ((restriction == "LactoseIntolerant") && (prods[i].lactoseIntolerant == true) && 
-		(!((organicPreference == "Yes") && (prods[i].organic == false)))){
-			product_names.push(prods[i].name);
-		}
-		else if ((restriction == "NutAllergy") && (prods[i].nutAllergy == true) && 
-		(!((organicPreference == "Yes") && (prods[i].organic == false)))){
-			product_names.push(prods[i].name);
-		}
-		else if ((restriction == "None") && 
-		(!((organicPreference == "Yes") && (prods[i].organic == false)))) {
+		if ((!((lactoseIntolerant == true) && (prods[i].lactoseIntolerant == false))) && (!((nutAllergy == true) && (prods[i].nutAllergy == false))) && 
+		(!((organicPreference == "Yes") && (prods[i].organic == false))) && ((category == prods[i].category) || (category == ''))){
 			product_names.push(prods[i].name);
 		}
 	}

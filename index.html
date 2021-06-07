@@ -9,55 +9,68 @@
 
 <h1>EasyGrocery</h1>
 
-<!-- Tab links, each one with an onclick event associated with it -->
-<div class="tab">
-  <button class="tablinks" onclick="openInfo(event, 'Client')">Client</button>
-  <button class="tablinks" onclick="openInfo(event, 'Products')">Products</button>
-  <button class="tablinks" onclick="openInfo(event, 'Cart')">Cart</button>
-</div>
-
-<!-- Tab content -->
-<div id="Client" class="tabcontent">
-  <h3>Client Information</h3>
-  <p>Tell us a bit about you.</p>
-
+<button class="accordion"onclick="openInfo(event, 'Preferences')">Preferences</button>
+<div id="Preferences" class="panel">
+  <h3>Preferences</h3>
   <div>
-	Choose a Category:
-	<select id="dietSelect" name="dietSelect" onchange="populateListProductChoices(this.id, 'organicSelect', 'displayProduct')">
-	  <option value=""></option>
-    <option value="LactoseIntolerant">Lactose Intolerant</option>
-    <option value="NutAllergy">Nut Allergy</option>
-    <option value="None">None</option>
-	</select>
+	Which of the following dietary restrictions do you have?
+  <p><input type="checkbox" id="lactoseIntolerant" value="lactoseIntolerant" onchange="populateListProductChoices(this.id, 'nutAllergy', 'organicSelect', 'displayProduct')"><label>Lactose Intolerance</label></p>
+  <p><input type="checkbox" id="nutAllergy" value="nutAllergy" onchange="populateListProductChoices('lactoseIntolerant', this.id, 'organicSelect', 'displayProduct')"><label>Nut Allergy</label></p>
   </div>
 
   <div>
   Do you prefer organic products?
-  <select id="organicSelect" name="organicSelect" onchange="populateListProductChoices('dietSelect', this.id, 'displayProduct')">
-    <option value="Yes">Yes</option>
-    <option value="No" selected>No</option>
-	</select>
+  <p><input type="radio" name="organicSelect" value="Yes" onchange="populateListProductChoices('lactoseIntolerant', 'nutAllergy', 'organicSelect', 'displayProduct')"><label>Yes</label></p>
+  <p><input type="radio" name="organicSelect" value="No" onchange="populateListProductChoices('lactoseIntolerant', 'nutAllergy', 'organicSelect', 'displayProduct')" checked><label>No</label></p>
   </div>
 
 </div>
 
-<div id="Products" class="tabcontent">
-  <h3>Your targeted products</h3>
+<button class="accordion" onclick="openInfo(event, 'Products')">Products</button>
+<div id="Products" class="panel">
+  <h3>Personalized products</h3>
   <p>We preselected products based on your restrictions.</p>
-	 Choose items to buy:
+
+  <div class="filter">
+  <p>Filter by category</p>
+	<select id="category" name="category" onchange="populateListProductChoices('lactoseIntolerant', 'nutAllergy', 'organicSelect', 'displayProduct')">
+	  <option value="" selected>None</option>
+    <option value="vegetable">Vegetable</option>
+    <option value="dairy">Dairy</option>
+    <option value="nut">Nut</option>
+    <option value="snack">Snack</option>
+    <option value="fish">Fish</option>
+    <option value="baked goods">Baked Goods</option>
+	</select>
+  </div>
+
+  <div>
+	 Select items to buy
 	 <div id="displayProduct"></div>
 	 <button id="addCart" type="button" class="block" onclick="selectedItems()">
 		Add selected items to cart.
 	</button>
+  </div>
 </div>
 
-<div id="Cart" class="tabcontent">
+<button class="accordion" onclick="openInfo(event, 'Cart')">Cart</button>
+<div id="Cart" class="panel">
   <h3>Cart</h3>
   <p>Here is your cart.</p>
   <div id="displayCart"></div>
+
+  <div>
+    How would you prefer to receive your items?
+    <select id="orderType" name="orderType" onchange="updateOrderType()">
+      <option value="delivery">Delivery</option>
+      <option value="pickup">Pickup</option>
+    </select>
+
+  </div>
+  <div id="displayOrderType"></div>
 </div>
 
-<p>Website modified by Wyse Ebbah</p>
+<p>Website created by Wyse Ebbah</p>
 
 <script src="scripts/groceries.js"></script>
 <script src="scripts/main.js"></script>

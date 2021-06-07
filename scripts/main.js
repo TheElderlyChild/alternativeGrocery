@@ -2,24 +2,20 @@
 // This function is called when any of the tab is clicked
 // It is adapted from https://www.w3schools.com/howto/howto_js_tabs.asp
 
-function openInfo(evt, tabName) {
+function openInfo(evt, panelName) {
 
-	// Get all elements with class="tabcontent" and hide them
-	tabcontent = document.getElementsByClassName("tabcontent");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
-
-	// Get all elements with class="tablinks" and remove the class "active"
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
+	var panel = document.getElementById(panelName)
 
 	// Show the current tab, and add an "active" class to the button that opened the tab
-	document.getElementById(tabName).style.display = "block";
-	evt.currentTarget.className += " active";
 
+	if (panel.style.display === "block") {
+		panel.style.display = "none";
+		evt.target.classList.remove("active");
+	} 
+	else {
+		panel.style.display = "block";
+		evt.target.className += " active";
+	}
 }
 
 
@@ -27,16 +23,19 @@ function openInfo(evt, tabName) {
 // generate a checkbox list from a list of products
 // it makes each product name as the label for the checkbos
 
-function populateListProductChoices(slct1, slct2, slct3) {
+function populateListProductChoices(slct1, slct2, slct3, slct4) {
     var s1 = document.getElementById(slct1);
 	var s2 = document.getElementById(slct2);
-    var s3 = document.getElementById(slct3);
+	var s3 = document.querySelector('input[name="'+ slct3+'"]:checked')
+    var s4 = document.getElementById(slct4);
 	
+	var category = document.getElementById('category');
+
 	// s2 represents the <div> in the Products tab, which shows the product list, so we first set it empty
-    s3.innerHTML = "";
+    s4.innerHTML = "";
 		
 	// obtain a reduced list of products based on restrictions
-    var optionArray = restrictListProducts(products, s1.value, s2.value);
+    var optionArray = restrictListProducts(products, s1.checked, s2.checked, s3.value, category.value);
 	sortProductsByPrice(optionArray)
 
 	// for each item in the array, create a checkbox element, each containing information such as:
@@ -51,17 +50,17 @@ function populateListProductChoices(slct1, slct2, slct3) {
 		checkbox.type = "checkbox";
 		checkbox.name = "product";
 		checkbox.value = productName;
-		s3.appendChild(checkbox);
+		s4.appendChild(checkbox);
 		
 		// create a label for the checkbox, and also add in HTML DOM
 		var label = document.createElement('label')
 		label.htmlFor = productName;
 		labelText = productName + " (Price: $" + getPrice(productName).toString() + ")"
 		label.appendChild(document.createTextNode(labelText));
-		s3.appendChild(label);
+		s4.appendChild(label);
 		
 		// create a breakline node and add in HTML DOM
-		s3.appendChild(document.createElement("br"));    
+		s4.appendChild(document.createElement("br"));    
 	}
 }
 	
@@ -93,5 +92,12 @@ function selectedItems(){
 	c.appendChild(para);
 	c.appendChild(document.createTextNode("Total Price is " + getTotalPrice(chosenProducts)));
 		
+}
+
+function updateOrderType(){
+	orderType=document.getElementById('orderType')
+	display=document.getElementById('displayOrderType')
+
+	display.innerHTML="I would like to receive my order by " + orderType.value
 }
 

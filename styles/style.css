@@ -4,34 +4,52 @@
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
+/* Style the buttons that are used to open the panels */
+.accordion{
+  background-color: #f1f1f1;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
   border: none;
   outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordion:hover {
   background-color: #ddd;
 }
 
+.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
 /* Create an active/current tablink class */
-.tab button.active {
+.active {
   background-color: #ccc;
 }
 
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
 /* Style the tab content */
-.tabcontent {
+.panel {
   display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+  overflow: hidden;
+}
+
+.filter {
+  margin-bottom: 25px;
 }
